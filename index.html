@@ -1,0 +1,121 @@
+
+
+<div id="container">
+</div>
+<script type="text/javascript" src="js/three.min.js"></script>
+<script type="text/javascript" src="js/Detector.js"></script>
+<script type="text/javascript" src="js/OBJLoader.js"></script>
+<script type="text/javascript" src="js/RequestAnimationFrame.js"></script>
+<script type="text/javascript" src="js/tween.min.js"></script>
+<script type="text/javascript">
+
+
+	initScene = function() {
+		container = document.getElementById("container");
+
+		camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1,10000);
+/*
+		camera.position.x = radius 
+							* Math.sin( theta * Math.PI / 360 ) 
+							* Math.cos( phi * Math.PI / 360 );
+
+    	camera.position.y = radius 
+    						* Math.sin( phi * Math.PI / 360 );
+
+	    camera.position.z = radius 
+	    					* Math.cos( theta * Math.PI / 360 ) 
+	    					* Math.cos( phi * Math.PI / 360 );
+
+    	//camera.target.position.y = 200;
+*/
+    	console.log("creating scene");
+    	scene = new THREE.Scene();
+
+    	console.log("adding ambient light");
+    	scene.add(new THREE.AmbientLight(0xFFFFFF));
+
+    	console.log("adding DirectionalLight");
+    	light = new THREE.DirectionalLight(0x404040);
+    	light.position.set(0,0,1);
+    	light.position.normalize();
+    	scene.add(light);
+
+/*
+    	console.log("creating stl loader");
+    	var loader = new THREE.JSONLoader();
+    	
+    	console.log("loading Round_Base.json");
+    	loader.load({model:"./Round_Base.js", callback: function(geometry) {
+    					console.log("geometry");
+    					console.log(geometry);
+
+
+    					var material = new THREE.MeshLambertMaterial({color:0x7777ff});
+
+    					console.log("creating base mesh");
+    					baseMesh = new THREE.Mesh(geometry, material);
+    					console.log(baseMesh);
+
+    					baseMesh.position.y = baseMesh.position.x = baseMesh.position.z = 0;
+    					console.log("adding baseMesh to robotbase");
+    					baseMesh.add(robotBase);
+    					scene.add(baseMesh)
+
+
+    	}});
+*/
+
+// instantiate a loader
+var loader = new THREE.OBJLoader();
+
+// load a resource
+loader.load(
+	// resource URL
+	'Simple_Base.obj',
+	// Function when resource is loaded
+	function ( geometry, materials ) {
+		var material = new THREE.MultiMaterial( materials );
+		var object = new THREE.Mesh( geometry, material );
+		scene.add( object );
+
+
+
+	}
+);
+
+    	
+
+    	renderer = new THREE.WebGLRenderer({ antialias: true });
+    	renderer.setSize(window.innerWidth, window.innerHeight);
+
+    	container.appendChild(renderer.domElement);
+    	renderer.render( scene, camera );
+
+	}
+
+
+
+
+	if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+	var container; //this is the html container called "container"
+	var camera, scene, renderer, light; //all of the important stuff
+
+	//rotation constants;
+	var radius = 7000, theta = 45, phi=60;
+
+	var robotBase = new THREE.Object3D(); //this is the simple robot base
+	var baseMesh;
+
+
+	initScene();
+
+/*
+	console.log("adding robotbase to scene");
+   	console.log(robotBase);
+    scene.add(robotBase);
+	renderer.render( scene, camera );
+*/
+
+
+</script>
+
