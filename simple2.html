@@ -13,9 +13,12 @@
 		<script src="js/Math.js"></script>
 
 
+
 		<script>
 
 var container;
+
+var counter=0;
 
 var camera, scene, renderer;
 
@@ -44,6 +47,65 @@ var handTwoCylinderGeom, handTwoCylinder;
 var wristCylinderGeom, wristCylinder;
 var fingerOneGeom, fingerOne;
 var fingerTwoGeom, fingerTwo;
+
+var simCounter = 0;
+var simulationData = [{move:"mainArm",rad:1743,axis:"X"},
+{move:"base",rad:1976,axis:"Y"},
+{move:"handOneCylinder",rad:4724,axis:"X"},
+{move:"wristCylinder",rad:1831,axis:"Y"},
+{move:"wristCylinder",rad:525,axis:"Y"},
+{move:"handTwoCylinder",rad:2379,axis:"Z"},
+{move:"handOneCylinder",rad:4170,axis:"X"},
+{move:"subArm",rad:5826,axis:"X"},
+{move:"mainArm",rad:183,axis:"X"},
+{move:"handOneCylinder",rad:134,axis:"X"},
+{move:"subArm",rad:3775,axis:"X"},
+{move:"mainArm",rad:4533,axis:"X"},
+{move:"mainArm",rad:3603,axis:"X"},
+{move:"base",rad:3950,axis:"Y"},
+{move:"handOneCylinder",rad:1186,axis:"X"},
+{move:"handOneCylinder",rad:1794,axis:"X"},
+{move:"handOneCylinder",rad:554,axis:"X"},
+{move:"subArm",rad:3595,axis:"X"},
+{move:"base",rad:720,axis:"Y"},
+{move:"subArm",rad:151,axis:"X"},
+{move:"handTwoCylinder",rad:3693,axis:"Z"},
+{move:"mainArm",rad:1143,axis:"X"},
+{move:"handOneCylinder",rad:1072,axis:"X"},
+{move:"handTwoCylinder",rad:3780,axis:"Z"},
+{move:"base",rad:4489,axis:"Y"},
+{move:"handOneCylinder",rad:3206,axis:"X"},
+{move:"subArm",rad:5109,axis:"X"},
+{move:"handOneCylinder",rad:202,axis:"X"},
+{move:"subArm",rad:1763,axis:"X"},
+{move:"handTwoCylinder",rad:2595,axis:"Z"},
+{move:"handTwoCylinder",rad:3120,axis:"Z"},
+{move:"base",rad:1754,axis:"Y"},
+{move:"base",rad:269,axis:"Y"},
+{move:"base",rad:1344,axis:"Y"},
+{move:"base",rad:1969,axis:"Y"},
+{move:"mainArm",rad:5907,axis:"X"},
+{move:"wristCylinder",rad:5774,axis:"Y"},
+{move:"handOneCylinder",rad:4560,axis:"X"},
+{move:"base",rad:4508,axis:"Y"},
+{move:"mainArm",rad:3222,axis:"X"},
+{move:"handOneCylinder",rad:4800,axis:"X"},
+{move:"handOneCylinder",rad:4444,axis:"X"},
+{move:"mainArm",rad:5007,axis:"X"},
+{move:"mainArm",rad:3354,axis:"X"},
+{move:"handTwoCylinder",rad:1785,axis:"Z"},
+{move:"handTwoCylinder",rad:2034,axis:"Z"},
+{move:"wristCylinder",rad:1709,axis:"Y"},
+{move:"base",rad:14,axis:"Y"},
+{move:"handOneCylinder",rad:5188,axis:"X"},
+{move:"handOneCylinder",rad:286,axis:"X"},
+{move:"subArm",rad:64,axis:"X"},
+{move:"handOneCylinder",rad:5866,axis:"X"},
+{move:"handTwoCylinder",rad:1080,axis:"Z"},
+{move:"handOneCylinder",rad:3894,axis:"X"},
+{move:"handTwoCylinder",rad:5319,axis:"Z"},
+{move:"base",rad:1414,axis:"Y"}];
+
 
 init();
 animate();
@@ -198,17 +260,46 @@ function init() {
 function animate() {
 	requestAnimationFrame(animate);
 	render();
+	if(counter++ % 50 == 0) {
+		var sData = simulationData[simCounter++];
+		switch(sData.move) {
+			
+			case "base":
+				base.rotateY(sData.rad);
+				break;
+			case "mainArm":
+				mainArm.rotateX(sData.rad);
+				break;
+			case "subArm":
+				subArm.rotateX(sData.rad);
+				break;
+			case "handOneCylinder":
+				handOneCylinder.rotateX(sData.rad);
+				break;
+			case "handTwoCylinder":
+				handTwoCylinder.rotateZ(sData.rad);
+				break;
+			case "wristCylinder":
+				wristCylinder.rotateY(sData.rad);
+				break;
+		}
+	}
+
 }
 
 function render() {
 	camera.lookAt(scene.position);
 	renderer.render(scene, camera);
+
+
+	/*
 	base.rotateY(0.01);
 	mainArm.rotateX(-0.01);
 	subArm.rotateX(-0.05);
 	handOneCylinder.rotateX(0.03);
 	handTwoCylinder.rotateZ(-0.01);
 	wristCylinder.rotateY(0.01);
+	*/
 
 }
 			</script>

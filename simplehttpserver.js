@@ -12,7 +12,7 @@
  * instead.
  */
 
-var port = 8000,
+var port = 8001,
 	http = require('http'),
 	urlParser = require('url'),
 	fs = require('fs'),
