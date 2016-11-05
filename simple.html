@@ -10,22 +10,79 @@
 	</head>
 	<body>
 		<script src="js/three.min.js"></script>
-		<script>
-			var scene = new THREE.Scene();
-			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+		<script type="text/javascript" src="js/OBJLoader.js"></script>
 
-			var renderer = new THREE.WebGLRenderer();
-			renderer.setSize( window.innerWidth, window.innerHeight );
-			document.body.appendChild( renderer.domElement );
+
+		<script>
+
+var container;
+
+var camera, scene, renderer;
+
+var mouseX = 0, mouseY = 0;
+
+var windowHalfX = window.innerWidth / 2;
+var windowHalfY = window.innerHeight / 2;
+
+init();
+animate();
+
+
+function init() {
+
+	camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 1, 2000);
+	camera.position.z = 250
+
+	scene = new THREE.Scene();
+
+	var ambient = new THREE.AmbientLight( 0x101030 );
+	scene.add( ambient );
+
+	var directionalLight = new THREE.DirectionalLight( 0xffeedd );
+	directionalLight.position.set( 0, 0, 1 );
+	scene.add( directionalLight );
+
+
+	var objLoader = new THREE.OBJLoader();
+	objLoader.load("Simple_Base.obj", function(object) {
+
+		//if you want to add your custom material
+        var materialObj = new THREE.MeshBasicMaterial({vertexColors:THREE.FaceColors,overdraw:0.5});
+        object.traverse(function (child) {
+	        if (child instanceof THREE.Mesh) {
+	            child.material = materialObj;
+	        }
+	    });
+		scene.add(object);
+	});
+
+	renderer = new THREE.WebGLRenderer();
+	renderer.setPixelRatio( window.devicePixelRatio );
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+}
+
+function animate() {
+	requestAnimationFrame(animate);
+	render();
+}
+
+function render() {
+	camera.lookAt(scene.position);
+	renderer.render(scene, camera);
+	
+
+}
+
+
+/*
 
 			var geometry = new THREE.BoxGeometry( 1, 1, 1 );
 			var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
 			var cube = new THREE.Mesh( geometry, material );
 			scene.add( cube );
-
-			camera.position.z = 5;
-
-			renderer.render(scene, camera);
+*/
+			
 			/*
 			var render = function () {
 				requestAnimationFrame( render );
