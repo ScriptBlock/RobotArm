@@ -27,14 +27,23 @@ var windowHalfY = window.innerHeight / 2;
 //var radius = 7000, theta = 45, phi = 60
 
 var commonMaterial = new THREE.MeshBasicMaterial( {color: "lightgrey", vertexColors: THREE.FaceColors, wireframe: false} );
+var redMaterial = new THREE.MeshBasicMaterial( {color: "red", vertexColors: THREE.FaceColors, wireframe: true} );
+var blueMaterial = new THREE.MeshBasicMaterial( {color: "lightblue", vertexColors: THREE.FaceColors, wireframe: true} );
 
 
+var baseCylinderGeom, base;
+var baseCylinderAngleGeom, baseAngle;
+var mainArmCylinderGeom, mainArm;
+var mainArmAngleGeom, mainArmAngle;
+var subArmCylinderGeom, subArm;
+var subArmAngleGeom, subArmAngle;
+var handOneCylinderGeom, handOneCylinder;
 
-var baseCylinderGeom, baseCylinderMat, base;
-var baseCylinderAngleGeom, baseCylinderAngleMat, baseAngle;
-var mainArmCylinderMat, mainArmCylinderGeom, mainArm;
-var mainArmAngleGeom, mainArmAngleMat, mainArmAngle;
-var subArmCylinderMat, subArmCylinderGeom, subArm;
+var handTwoCylinderGeom, handTwoCylinder;
+
+var wristCylinderGeom, wristCylinder;
+var fingerOneGeom, fingerOne;
+var fingerTwoGeom, fingerTwo;
 
 init();
 animate();
@@ -42,7 +51,8 @@ animate();
 
 function init() {
 
-	camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );	
+	camera = new THREE.PerspectiveCamera( 80, window.innerWidth/window.innerHeight, 0.1, 1000 );	
+
 	camera.position.y = 10;
 	camera.position.z = 10;
 	//camera.position.z = -5;
@@ -91,15 +101,15 @@ function init() {
 */
 
 
-	baseCylinderMat = new THREE.MeshBasicMaterial( {color: "red", vertexColors: THREE.FaceColors, wireframe: true} );
+	
 	baseCylinderGeom = new THREE.CylinderGeometry(1,1,3,32);
-	base = new THREE.Mesh(baseCylinderGeom, baseCylinderMat);
+	base = new THREE.Mesh(baseCylinderGeom, redMaterial);
 
 	scene.add(base);
 
-	baseCylinderAngleMat = new THREE.MeshBasicMaterial( {color: "blue", vertexColors: THREE.FaceColors, wireframe: true} );
+	
 	baseCylinderAngleGeom = new THREE.CylinderGeometry(0.75,0.75,1,32);
-	baseAngle = new THREE.Mesh(baseCylinderAngleGeom, baseCylinderAngleMat);
+	baseAngle = new THREE.Mesh(baseCylinderAngleGeom, blueMaterial);
 	baseAngle.position.x = 1.25;
 	baseAngle.position.y = 0.75;
 	baseAngle.rotateZ(THREE.Math.degToRad(90));
@@ -107,29 +117,76 @@ function init() {
 	//temp
 	base.rotateY(THREE.Math.degToRad(180));
 
-	mainArmCylinderMat = new THREE.MeshBasicMaterial( {color: "red", vertexColors: THREE.FaceColors, wireframe: true} );
+	
 	mainArmCylinderGeom = new THREE.CylinderGeometry(0.5,0.5,4.5,32);
 	mainArmCylinderGeom.translate(0, 1.75,0);
-	mainArm = new THREE.Mesh(mainArmCylinderGeom,mainArmCylinderMat);
+	mainArm = new THREE.Mesh(mainArmCylinderGeom,redMaterial);
 	mainArm.position.x = 2.15;
 	mainArm.position.y = 1;
 	base.add(mainArm);	
 
-	mainArmAngleMat = new THREE.MeshBasicMaterial( {color: "blue", vertexColors: THREE.FaceColors, wireframe: true} );
+	
 	mainArmAngleGeom = new THREE.CylinderGeometry(0.5, 0.5, 0.5, 32);
-	mainArmAngle = new THREE.Mesh(mainArmAngleGeom,mainArmAngleMat);
+	mainArmAngle = new THREE.Mesh(mainArmAngleGeom,blueMaterial);
 	mainArmAngle.position.x = -0.75;
 	mainArmAngle.position.y = 3.45;
 	mainArmAngle.rotateZ(THREE.Math.degToRad(90));
 	mainArm.add(mainArmAngle);
 
-	subArmCylinderMat = new THREE.MeshBasicMaterial( {color: "red", vertexColors: THREE.FaceColors, wireframe: true} );
-	subArmCylinderGeom = new THREE.CylinderGeometry(0.5,0.5,3.5,32);
+	
+	subArmCylinderGeom = new THREE.CylinderGeometry(0.35,0.35,3,32);
 	subArmCylinderGeom.translate(0, 1.2,0);
-	subArm = new THREE.Mesh(subArmCylinderGeom,subArmCylinderMat);
+	subArm = new THREE.Mesh(subArmCylinderGeom,redMaterial);
 	subArm.position.x = -1.35;
 	subArm.position.y = 3.5;
 	mainArm.add(subArm);	
+
+	
+	subArmAngleGeom = new THREE.CylinderGeometry(0.25, 0.25, 0.5,32);
+	subArmAngle = new THREE.Mesh(subArmAngleGeom, blueMaterial);
+	subArmAngle.position.x = 0.5;
+	subArmAngle.position.y = 2.4;
+	subArmAngle.rotateZ(THREE.Math.degToRad(90));
+	subArm.add(subArmAngle);
+
+	handOneCylinderGeom = new THREE.CylinderGeometry(0.25,0.25,0.65, 32);
+	handOneCylinderGeom.translate(0,0.15,0);
+	handOneCylinder = new THREE.Mesh(handOneCylinderGeom, redMaterial);
+	handOneCylinder.position.y = 2.4;
+	handOneCylinder.position.x = 1;
+	subArm.add(handOneCylinder);
+
+
+	handTwoCylinderGeom = new THREE.CylinderGeometry(0.25,0.25,0.55, 32);
+	handTwoCylinder = new THREE.Mesh(handTwoCylinderGeom, blueMaterial);
+	handTwoCylinder.rotateX(THREE.Math.degToRad(90));
+	handTwoCylinder.position.y = 0.65;
+	//handOneCylinder.position.x = 1.15;
+	handOneCylinder.add(handTwoCylinder);
+
+
+
+
+	wristCylinderGeom = new THREE.CylinderGeometry(0.25,0.25,0.25,32);
+	wristCylinder = new THREE.Mesh(wristCylinderGeom, redMaterial);
+	wristCylinder.position.y = 0.4;
+	handTwoCylinder.add(wristCylinder);
+
+
+	fingerOneGeom = new THREE.BoxGeometry(0.1, 0.3, 0.1);
+	fingerOne = new THREE.Mesh(fingerOneGeom, blueMaterial);
+	fingerOne.position.y = 0.3;
+	fingerOne.position.x = -0.1;
+	wristCylinder.add(fingerOne);
+
+	fingerTwoGeom = new THREE.BoxGeometry(0.1,0.3, 0.1);
+	fingerTwo = new THREE.Mesh(fingerTwoGeom, blueMaterial);
+	fingerTwo.position.y = 0.3;
+	fingerTwo.position.x = 0.1;
+	wristCylinder.add(fingerTwo);
+
+
+
 
 
 	renderer = new THREE.WebGLRenderer();
@@ -146,9 +203,12 @@ function animate() {
 function render() {
 	camera.lookAt(scene.position);
 	renderer.render(scene, camera);
-	base.rotateY(0.05);
+	base.rotateY(0.01);
 	mainArm.rotateX(-0.01);
 	subArm.rotateX(-0.05);
+	handOneCylinder.rotateX(0.03);
+	handTwoCylinder.rotateZ(-0.01);
+	wristCylinder.rotateY(0.01);
 
 }
 			</script>
