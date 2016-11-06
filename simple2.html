@@ -11,6 +11,7 @@
 	<body>
 		<script src="js/three.min.js"></script>
 		<script src="js/Math.js"></script>
+		<script src="js/tween.min.js"></script>
 
 
 
@@ -21,6 +22,8 @@ var container;
 var counter=0;
 
 var camera, scene, renderer;
+
+var activeTween;
 
 var mouseX = 0, mouseY = 0;
 
@@ -260,30 +263,86 @@ function init() {
 function animate() {
 	requestAnimationFrame(animate);
 	render();
-	if(counter++ % 50 == 0) {
+	if(counter++ % 25 == 0) {
 		var sData = simulationData[simCounter++];
+		var actualRadians=THREE.Math.degToRad(sData.rad*Math.PI/180);
 		switch(sData.move) {
-			
 			case "base":
-				base.rotateY(sData.rad);
+
+				new TWEEN.Tween({y:base.rotation.y, obj:base, tween:activeTween})
+						.to({y:actualRadians}, 200)
+						.onUpdate(function() { this.obj.rotation.y = this.y; })
+						.easing(TWEEN.Easing.Exponential.InOut)
+						.start();
+				//base.rotateY(sData.rad);
 				break;
 			case "mainArm":
-				mainArm.rotateX(sData.rad);
+				new TWEEN.Tween({x:mainArm.rotation.x, obj:mainArm, tween:activeTween})
+						.to({x:actualRadians}, 200)
+						.onUpdate(function() { this.obj.rotation.x = this.x; })
+						.easing(TWEEN.Easing.Exponential.InOut)
+						.start();
+
+				//mainArm.rotateX(sData.rad);
 				break;
 			case "subArm":
-				subArm.rotateX(sData.rad);
+				new TWEEN.Tween({x:subArm.rotation.x, obj:subArm, tween:activeTween})
+						.to({x:actualRadians}, 200)
+						.onUpdate(function() { this.obj.rotation.x = this.x; })
+						.easing(TWEEN.Easing.Exponential.InOut)
+						.start();
+
+				//subArm.rotateX(sData.rad);
 				break;
 			case "handOneCylinder":
-				handOneCylinder.rotateX(sData.rad);
+				new TWEEN.Tween({x:handOneCylinder.rotation.x, obj:handOneCylinder, tween:activeTween})
+						.to({x:actualRadians}, 200)
+						.onUpdate(function() { this.obj.rotation.x = this.x; })
+						.easing(TWEEN.Easing.Exponential.InOut)
+						.start();
+
+				//handOneCylinder.rotateX(sData.rad);
 				break;
 			case "handTwoCylinder":
-				handTwoCylinder.rotateZ(sData.rad);
+				new TWEEN.Tween({z:handTwoCylinder.rotation.z, obj:handTwoCylinder, tween:activeTween})
+						.to({z:actualRadians}, 200)
+						.onUpdate(function() { this.obj.rotation.z = this.z; })
+						.easing(TWEEN.Easing.Exponential.InOut)
+						.start();
+
+				//handTwoCylinder.rotateZ(sData.rad);
 				break;
 			case "wristCylinder":
-				wristCylinder.rotateY(sData.rad);
+				new TWEEN.Tween({y:wristCylinder.rotation.y, obj:wristCylinder, tween:activeTween})
+						.to({y:actualRadians}, 200)
+						.onUpdate(function() { this.obj.rotation.y = this.y; })
+						.easing(TWEEN.Easing.Exponential.InOut)
+						.start();
+
+				//wristCylinder.rotateY(sData.rad);
 				break;
 		}
 	}
+	TWEEN.update();
+
+}
+
+
+function doTween() {
+
+
+		new TWEEN.Tween( { y : dummyArray[i].rotation.y, obj : dummyArray[i], tween : tweens[i] } )
+		.to( { y : dummyArray[i].rotation.y + ((mag * Math.random()) * sign) }, time * Math.random() )
+		.onUpdate( function () {
+			this.obj.rotation.y = this.y;
+		} )
+		.easing( TWEEN.Easing.Exponential.InOut )
+		.onComplete( function () {
+			this.tween.status = false;
+		})
+		.start();
+
+
 
 }
 
