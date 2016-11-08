@@ -22,62 +22,64 @@
 		var activeTween;
 
 		var simCounter = 0;
-		var simulationData = [{move:"shoulder",rad:1743,axis:"Y"},
-		{move:"base",rad:1976,axis:"Y"},
-		{move:"wrist2",rad:4724,axis:"Y"},
-		{move:"wrist1",rad:1831,axis:"Y"},
-		{move:"wrist1",rad:525,axis:"Y"},
-		{move:"wrist3",rad:2379,axis:"Y"},
-		{move:"wrist2",rad:4170,axis:"Y"},
-		{move:"elbow",rad:5826,axis:"X"},
+		var simulationData = [
+		{move:"shoulder",rad:1743,axis:"Y"},
+		//{move:"base",rad:1976,axis:"Y"},
+		//{move:"wrist2",rad:4724,axis:"Y"},
+		//{move:"wrist1",rad:1831,axis:"Y"},
+		//{move:"wrist1",rad:525,axis:"Y"},
+		//{move:"wrist3",rad:2379,axis:"Y"},
+		//{move:"wrist2",rad:4170,axis:"Y"},
+		//{move:"elbow",rad:5826,axis:"X"},
 		{move:"shoulder",rad:183,axis:"Y"},
-		{move:"wrist2",rad:134,axis:"Y"},
-		{move:"elbow",rad:3775,axis:"X"},
+		//{move:"wrist2",rad:134,axis:"Y"},
+		//{move:"elbow",rad:3775,axis:"X"},
 		{move:"shoulder",rad:4533,axis:"Y"},
 		{move:"shoulder",rad:3603,axis:"Y"},
-		{move:"base",rad:3950,axis:"Y"},
-		{move:"wrist2",rad:1186,axis:"Y"},
-		{move:"wrist2",rad:1794,axis:"Y"},
-		{move:"wrist2",rad:554,axis:"Y"},
-		{move:"elbow",rad:3595,axis:"X"},
-		{move:"base",rad:720,axis:"Y"},
-		{move:"elbow",rad:151,axis:"X"},
-		{move:"wrist3",rad:3693,axis:"Y"},
+		//{move:"base",rad:3950,axis:"Y"},
+		//{move:"wrist2",rad:1186,axis:"Y"},
+		//{move:"wrist2",rad:1794,axis:"Y"},
+		//{move:"wrist2",rad:554,axis:"Y"},
+		//{move:"elbow",rad:3595,axis:"X"},
+		//{move:"base",rad:720,axis:"Y"},
+		//{move:"elbow",rad:151,axis:"X"},
+		//{move:"wrist3",rad:3693,axis:"Y"},
 		{move:"shoulder",rad:1143,axis:"Y"},
-		{move:"wrist2",rad:1072,axis:"Y"},
-		{move:"wrist3",rad:3780,axis:"Y"},
-		{move:"base",rad:4489,axis:"Y"},
-		{move:"wrist2",rad:3206,axis:"Y"},
-		{move:"elbow",rad:5109,axis:"X"},
-		{move:"wrist2",rad:202,axis:"Y"},
-		{move:"elbow",rad:1763,axis:"X"},
-		{move:"wrist3",rad:2595,axis:"Y"},
-		{move:"wrist3",rad:3120,axis:"Y"},
-		{move:"base",rad:1754,axis:"Y"},
-		{move:"base",rad:269,axis:"Y"},
-		{move:"base",rad:1344,axis:"Y"},
-		{move:"base",rad:1969,axis:"Y"},
+		////{move:"wrist2",rad:1072,axis:"Y"},
+		//{move:"wrist3",rad:3780,axis:"Y"},
+		//{move:"base",rad:4489,axis:"Y"},
+		//{move:"wrist2",rad:3206,axis:"Y"},
+		//{move:"elbow",rad:5109,axis:"X"},
+		//{move:"wrist2",rad:202,axis:"Y"},
+		//{move:"elbow",rad:1763,axis:"X"},
+		//{move:"wrist3",rad:2595,axis:"Y"},
+		//{move:"wrist3",rad:3120,axis:"Y"},
+		//{move:"base",rad:1754,axis:"Y"},
+		//{move:"base",rad:269,axis:"Y"},
+		//{move:"base",rad:1344,axis:"Y"},
+		//{move:"base",rad:1969,axis:"Y"},
 		{move:"shoulder",rad:5907,axis:"Y"},
-		{move:"wrist1",rad:5774,axis:"Y"},
-		{move:"wrist2",rad:4560,axis:"Y"},
-		{move:"base",rad:4508,axis:"Y"},
+		//{move:"wrist1",rad:5774,axis:"Y"},
+		//{move:"wrist2",rad:4560,axis:"Y"},
+		//{move:"base",rad:4508,axis:"Y"},
 		{move:"shoulder",rad:3222,axis:"Y"},
-		{move:"wrist2",rad:4800,axis:"Y"},
-		{move:"wrist2",rad:4444,axis:"Y"},
+		//{move:"wrist2",rad:4800,axis:"Y"},
+		//{move:"wrist2",rad:4444,axis:"Y"},
 		{move:"shoulder",rad:5007,axis:"Y"},
-		{move:"shoulder",rad:3354,axis:"Y"},
-		{move:"wrist3",rad:1785,axis:"Y"},
-		{move:"wrist3",rad:2034,axis:"Y"},
-		{move:"wrist1",rad:1709,axis:"Y"},
-		{move:"base",rad:14,axis:"Y"},
-		{move:"wrist2",rad:5188,axis:"Y"},
-		{move:"wrist2",rad:286,axis:"Y"},
-		{move:"elbow",rad:64,axis:"X"},
-		{move:"wrist2",rad:5866,axis:"Y"},
-		{move:"wrist3",rad:1080,axis:"Y"},
-		{move:"wrist2",rad:3894,axis:"Y"},
-		{move:"wrist3",rad:5319,axis:"Y"},
-		{move:"base",rad:1414,axis:"Y"}];
+		{move:"shoulder",rad:3354,axis:"Y"}
+		//{move:"wrist3",rad:1785,axis:"Y"},
+		//{move:"wrist3",rad:2034,axis:"Y"},
+		//{move:"wrist1",rad:1709,axis:"Y"},
+		//{move:"base",rad:14,axis:"Y"},
+		//{move:"wrist2",rad:5188,axis:"Y"},
+		//{move:"wrist2",rad:286,axis:"Y"},
+		//{move:"elbow",rad:64,axis:"X"},
+		//{move:"wrist2",rad:5866,axis:"Y"},
+		//{move:"wrist3",rad:1080,axis:"Y"},
+		//{move:"wrist2",rad:3894,axis:"Y"},
+		//{move:"wrist3",rad:5319,axis:"Y"},
+		//{move:"base",rad:1414,axis:"Y"}
+		];
 
 
 
@@ -156,6 +158,12 @@
 			} else {
 				if(counter++ % 25 == 0) {
 					var sData = simulationData[simCounter++];
+					if(!sData) { 
+						simCounter = 0; 
+						simBaseRotation++; 
+						console.log("testing at offset rotation: " + simBaseRotation); 
+						shoulder.rotateY(THREE.Math.degToRad(simBaseRotation));
+					}
 					var actualRadians=THREE.Math.degToRad(sData.rad*Math.PI/180);
 					switch(sData.move) {
 						case "base":

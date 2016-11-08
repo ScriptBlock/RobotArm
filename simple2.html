@@ -30,8 +30,6 @@ var mouseX = 0, mouseY = 0;
 var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
 
-//var radius = 7000, theta = 45, phi = 60
-
 var commonMaterial = new THREE.MeshBasicMaterial( {color: "lightgrey", vertexColors: THREE.FaceColors, wireframe: false} );
 var redMaterial = new THREE.MeshBasicMaterial( {color: "red", vertexColors: THREE.FaceColors, wireframe: true} );
 var blueMaterial = new THREE.MeshBasicMaterial( {color: "lightblue", vertexColors: THREE.FaceColors, wireframe: true} );
@@ -120,9 +118,6 @@ function init() {
 
 	camera.position.y = 10;
 	camera.position.z = 10;
-	//camera.position.z = -5;
-
-	//camera.rotateZ(20);
 
 
 	scene = new THREE.Scene();
@@ -133,38 +128,6 @@ function init() {
 	var pointLight = new THREE.PointLight( 0x404040 );
 	pointLight.position.set( 0, 100, 100 );
 	scene.add( pointLight );
-
-/*
-	var objLoader = new THREE.OBJLoader();
-	objLoader.load("Round_Base.obj", function(object) {
-
-
-        object.traverse(function (child) {
-	        if (child instanceof THREE.Mesh) {
-	            child.material = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe:true});
-
-	            //child.material = new THREE.MeshBasicMaterial({color:'red'});
-
-	        }
-	    });
-	    object.position.set(0,0,0);
-	    console.log(object);
-
-	    //console.log(object);
-		scene.add(object);
-		base = object;
-	});
-*/
-
-
-/*
-	var daeLoader = new THREE.ColladaLoader();
-	daeLoader.load("Simple_Base.dae", function(dae) {
-		scene.add(dae.scene);
-	});
-
-*/
-
 
 	
 	baseCylinderGeom = new THREE.CylinderGeometry(1,1,3,32);
@@ -179,8 +142,7 @@ function init() {
 	baseAngle.position.y = 0.75;
 	baseAngle.rotateZ(THREE.Math.degToRad(90));
 	base.add(baseAngle);
-	//temp
-	base.rotateY(THREE.Math.degToRad(180));
+//	base.rotateY(THREE.Math.degToRad(180));
 
 	
 	mainArmCylinderGeom = new THREE.CylinderGeometry(0.5,0.5,4.5,32);
@@ -226,11 +188,7 @@ function init() {
 	handTwoCylinder = new THREE.Mesh(handTwoCylinderGeom, blueMaterial);
 	handTwoCylinder.rotateX(THREE.Math.degToRad(90));
 	handTwoCylinder.position.y = 0.65;
-	//handOneCylinder.position.x = 1.15;
 	handOneCylinder.add(handTwoCylinder);
-
-
-
 
 	wristCylinderGeom = new THREE.CylinderGeometry(0.25,0.25,0.25,32);
 	wristCylinder = new THREE.Mesh(wristCylinderGeom, redMaterial);
@@ -250,12 +208,8 @@ function init() {
 	fingerTwo.position.x = 0.1;
 	wristCylinder.add(fingerTwo);
 
-
-
-
-
 	renderer = new THREE.WebGLRenderer();
-	//renderer.setPixelRatio( window.devicePixelRatio );
+	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	document.body.appendChild( renderer.domElement );
 }
@@ -274,7 +228,6 @@ function animate() {
 						.onUpdate(function() { this.obj.rotation.y = this.y; })
 						.easing(TWEEN.Easing.Exponential.InOut)
 						.start();
-				//base.rotateY(sData.rad);
 				break;
 			case "mainArm":
 				new TWEEN.Tween({x:mainArm.rotation.x, obj:mainArm, tween:activeTween})
@@ -282,8 +235,6 @@ function animate() {
 						.onUpdate(function() { this.obj.rotation.x = this.x; })
 						.easing(TWEEN.Easing.Exponential.InOut)
 						.start();
-
-				//mainArm.rotateX(sData.rad);
 				break;
 			case "subArm":
 				new TWEEN.Tween({x:subArm.rotation.x, obj:subArm, tween:activeTween})
@@ -291,8 +242,6 @@ function animate() {
 						.onUpdate(function() { this.obj.rotation.x = this.x; })
 						.easing(TWEEN.Easing.Exponential.InOut)
 						.start();
-
-				//subArm.rotateX(sData.rad);
 				break;
 			case "handOneCylinder":
 				new TWEEN.Tween({x:handOneCylinder.rotation.x, obj:handOneCylinder, tween:activeTween})
@@ -300,8 +249,6 @@ function animate() {
 						.onUpdate(function() { this.obj.rotation.x = this.x; })
 						.easing(TWEEN.Easing.Exponential.InOut)
 						.start();
-
-				//handOneCylinder.rotateX(sData.rad);
 				break;
 			case "handTwoCylinder":
 				new TWEEN.Tween({z:handTwoCylinder.rotation.z, obj:handTwoCylinder, tween:activeTween})
@@ -309,8 +256,6 @@ function animate() {
 						.onUpdate(function() { this.obj.rotation.z = this.z; })
 						.easing(TWEEN.Easing.Exponential.InOut)
 						.start();
-
-				//handTwoCylinder.rotateZ(sData.rad);
 				break;
 			case "wristCylinder":
 				new TWEEN.Tween({y:wristCylinder.rotation.y, obj:wristCylinder, tween:activeTween})
@@ -318,8 +263,6 @@ function animate() {
 						.onUpdate(function() { this.obj.rotation.y = this.y; })
 						.easing(TWEEN.Easing.Exponential.InOut)
 						.start();
-
-				//wristCylinder.rotateY(sData.rad);
 				break;
 		}
 	}
