@@ -14,10 +14,12 @@
 		<script src="js/underscore-min.js"></script>
 		<script src="js/Math.js"></script>
 		<script src="js/tween.min.js"></script>
+		<script src="js/OrbitControls.js"></script>
 
 		<script>
 		var camera, scene, loader, renderer;
 		var base, shoulder, elbow, wrist1, wrist2, wrist3;
+
 		var counter = 0;
 		var activeTween;
 
@@ -100,6 +102,14 @@
 			camera.position.z = 45;
 
 
+				controls = new THREE.OrbitControls( camera );
+				controls.rotateSpeed = 0.5;
+				controls.zoomSpeed = 0.5;
+				controls.enableDamping = true;
+				controls.dampingFactor = 0.25;
+				controls.enableZoom = true;
+
+
 			scene = new THREE.Scene();
 
 			loader = new THREE.ObjectLoader();
@@ -121,6 +131,8 @@
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
 
+			//renderer.domElement.addEventListener( 'mousemove', onMouseMove );
+
 /*
 			// instantiate a loader
 			var loader = new THREE.JSONLoader();
@@ -141,6 +153,7 @@
 
 		}
 
+
 		function animate() {
 			requestAnimationFrame(animate);
 			render();
@@ -148,12 +161,20 @@
 
 			if(!base || !shoulder || !elbow || !wrist1 || !wrist2 || !wrist3) {
 				scene.traverse(function(i) {
+					console.log(i.name);
 					if(i.name == "Base") { base = i; }
 					if(i.name == "Shoulder") { shoulder = i; }
 					if(i.name == "Elbow") { elbow = i; }
 					if(i.name == "Wrist1") { wrist1 = i; }
 					if(i.name == "Wrist2") { wrist2 = i; }
 					if(i.name == "Wrist3") { wrist3 = i; }
+
+					if(i.name == "Size 3_Over arm_r01_Simpel.stl") {
+						console.log(i);
+						console.log(i.material);
+						i.material.metalness = 1.0;
+						i.material.color.r = 150;
+					}
 				});
 			} else {
 				if(counter++ % 35 == 0) {
@@ -223,6 +244,8 @@
 
 		function render() {
 			camera.lookAt(scene.position);
+				controls.update();
+
 			renderer.render(scene, camera);
 		}
 
